@@ -18,7 +18,51 @@ function criarCobrinha() {
     }
 }
 
+document.addEventListener('keydown', update);
+
+function update(event) {
+    // Mudando direção para esquerda caso tenha sido apertado o cursor para esquerda apenas se a direção anterior não for a direita
+    if(event.keyCode == 37 && direction != "right"){
+        direction = "left";        
+    }
+
+    // Mudando direção para baixo caso tenha sido apertado o cursor para baixo apenas se a direção anterior não for para cima
+    if(event.keyCode == 38 && direction != "up"){
+        direction = "down";
+    }
+
+    // Mudando direção para direita caso tenha sido apertado o cursor para direita apenas se a direção anterior não for a esquerda
+    if(event.keyCode == 39 && direction != "left"){
+        direction = "right";
+    }
+
+    // Mudando direção para cima caso tenha sido apertado o cursor para cima apenas se a direção anterior não for para baixo
+    if(event.keyCode == 40 && direction != "down"){
+        direction = "up";
+    }
+}
+
 function iniciarJogo() {
+    // Caso cobrinha esteja no limite direito e a direção for direita, reaparecer na esquerda
+    if(snake[0].x > (15 * box) && direction == "right"){
+        snake[0].x = 0;
+    }
+
+    // Caso cobrinha esteja no limite esquerdo e a direção for esquerda, reaparecer na direita
+    if(snake[0].x < 0 && direction == "left"){
+        snake[0].x = 16 * box;
+    }
+
+    // Caso cobrinha esteja no limite superior e a direção for para cima, reaparecer em baixo
+    if(snake[0].y > (15 * box) && direction == "up"){
+        snake[0].y = 0;
+    }
+
+    // Caso cobrinha esteja no limite inferior e a direção for para baixo, reaparecer em cima
+    if(snake[0].y < 0 && direction == "down"){
+        snake[0].y = 16 * box;
+    }
+    
     criarBG();
     criarCobrinha();
 
@@ -51,4 +95,4 @@ function iniciarJogo() {
 
 }
 
-let jogo = setInterval(iniciarJogo, 100);
+let jogo = setInterval(iniciarJogo, 200);
