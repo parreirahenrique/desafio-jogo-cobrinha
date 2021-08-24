@@ -12,7 +12,7 @@ function criarBG() {
 }
 
 function criarCobrinha() {
-    for(i=0; i< snake.length; i++) {
+    for(i = 0; i < snake.length; i++) {
         context.fillStyle = "green";
         context.fillRect(snake[i].x, snake[i].y, box, box);
     }
@@ -93,11 +93,26 @@ function iniciarJogo() {
         posY -= box;
     }
     
-    snake.pop();                      //Retira primmeiro 
+    // Apenas retira último elemento caso a posição da cobra seja diferente da posição da comida
+    if(posX != food.x || posY != food.y){
+        snake.pop();                                       //Retira primmeiro 
+    }
 
-    let newHead = {x: posX, y: posY}; // Criando array contendo nova posição da cabeça da cobrinha
+    // Caso a posição da cobrinha seja igual a posição da comida
+    else{
+        food.x = Math.floor(Math.random() * 15 + 1) * box; // Gera nova posição X para comida
+        food.y = Math.floor(Math.random() * 15 + 1) * box; // Gera nova posição Y para comida
+    }
+    
+    for(i = 1; i < snake.length; i++){
+        if(snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+            alert("Você acertou sua própria cauda! Jogo encerrado!")
+        }
+    }
 
-    snake.unshift(newHead);           // Adicionando nova posição da cabeça da cobrinha ao array
+    let newHead = {x: posX, y: posY};                      // Criando array contendo nova posição da cabeça da cobrinha
+
+    snake.unshift(newHead);                                // Adicionando nova posição da cabeça da cobrinha ao array
 
 }
 
